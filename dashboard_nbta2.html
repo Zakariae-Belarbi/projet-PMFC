@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoPowerPlus Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      /* Enhanced Color Palette */
+      --primary-50: #e8f8f0;
+      --primary-100: #c3eed1;
+      --primary-200: #9ce3b0;
+      --primary-300: #74d78f;
+      --primary-400: #56cc74;
+      --primary-500: #38c15a;
+      --primary-600: #32b552;
+      --primary-700: #2ba648;
+      --primary-800: #24973e;
+      --primary-900: #1a7b2e;
+      
+      --secondary-50: #e3f2fd;
+      --secondary-100: #bbdefb;
+      --secondary-200: #90caf9;
+      --secondary-300: #64b5f6;
+      --secondary-400: #42a5f5;
+      --secondary-500: #2196f3;
+      --secondary-600: #1e88e5;
+      --secondary-700: #1976d2;
+      --secondary-800: #1565c0;
+      --secondary-900: #0d47a1;
+      
+      --accent-50: #fff3e0;
+      --accent-100: #ffe0b2;
+      --accent-200: #ffcc80;
+      --accent-300: #ffb74d;
+      --accent-400: #ffa726;
+      --accent-500: #ff9800;
+      --accent-600: #fb8c00;
+      --accent-700: #f57c00;
+      --accent-800: #ef6c00;
+      --accent-900: #e65100;
+      
+      /* Glassmorphism Variables */
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      --backdrop-blur: blur(20px);
+      
+      /* Enhanced Shadows */
+      --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      --shadow-glow: 0 0 40px rgba(56, 193, 90, 0.3);
+      --shadow-neon: 0 0 20px rgba(33, 150, 243, 0.6);
+      --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      
+      /* Animation Variables */
+      --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Layout Variables */
+      --border-radius-lg: 24px;
+      --border-radius-xl: 32px;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+      --spacing-2xl: 4rem;
+      
+      /* Theme Colors */
+      --bg-primary: #0a0f1c;
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --bg-tertiary: rgba(30, 41, 59, 0.6);
+      --bg-card: rgba(51, 65, 85, 0.3);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-tertiary: #94a3b8;
+      --border-color: rgba(148, 163, 184, 0.2);
+    }
+
+    .light-theme {
+      --bg-primary: #f8fafc;
+      --bg-secondary: rgba(255, 255, 255, 0.8);
+      --bg-tertiary: rgba(248, 250, 252, 0.6);
+      --bg-card: rgba(255, 255, 255, 0.4);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+      --border-color: rgba(15, 23, 42, 0.1);
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at top, rgba(56, 193, 90, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-primary) 0%, #0f1629 100%);
+      z-index: -2;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(1deg); }
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, var(--primary-500) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatUp 15s infinite linear;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Dashboard Container */
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--spacing-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Styles */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-xl);
+      padding: var(--spacing-lg);
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-right: var(--spacing-sm);
+      filter: drop-shadow(0 0 10px rgba(56, 193, 90, 0.5));
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .logo h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-400), var(--secondary-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      text-shadow: 0 0 30px rgba(56, 193, 90, 0.3);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    /* Glassmorphic Controls */
+    .date-range, .btn-primary, .btn-secondary {
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-xs) var(--spacing-md);
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+      color: white;
+      box-shadow: var(--shadow-glow);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow), var(--shadow-premium);
+    }
+
+    .btn-secondary:hover, .date-range:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* Enhanced Theme Toggle */
+    .theme-toggle {
+      position: relative;
+    }
+
+    .theme-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .theme-toggle label {
+      cursor: pointer;
+      width: 70px;
+      height: 35px;
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 2px solid var(--glass-border);
+      border-radius: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      position: relative;
+      transition: var(--transition-smooth);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .theme-toggle label::after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+      top: 3px;
+      left: 3px;
+      transition: var(--transition-bounce);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-toggle input:checked + label::after {
+      transform: translateX(33px);
+      background: linear-gradient(135deg, var(--secondary-400), var(--secondary-600));
+    }
+
+    .theme-toggle .fa-sun, .theme-toggle .fa-moon {
+      font-size: 1rem;
+      transition: var(--transition-smooth);
+    }
+
+    .theme-toggle .fa-sun {
+      color: var(--accent-500);
+    }
+
+    .theme-toggle .fa-moon {
+      color: var(--secondary-500);
+    }
+
+    /* System Overview */
+    .dashboard-overview {
+      margin-bottom: var(--spacing-xl);
+      padding: var(--spacing-xl);
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-overview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-500), var(--secondary-500), var(--accent-500));
+      animation: gradientFlow 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientFlow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .dashboard-overview h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-md);
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .dashboard-overview p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-lg);
+      line-height: 1.7;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+      padding: var(--spacing-md);
+      background: rgba(56, 193, 90, 0.1);
+      border: 1px solid rgba(56, 193, 90, 0.3);
+      border-radius: var(--border-radius-lg);
+      backdrop-filter: var(--backdrop-blur);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      color: var(--primary-400);
+      font-weight: 600;
+    }
+
+    .status-indicator i {
+      font-size: 1.2rem;
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Enhanced Metrics Cards */
+    .metrics-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .metric-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-glass), var(--shadow-premium);
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+      opacity: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .metric-card:hover::before {
+      opacity: 1;
+    }
+
+    .metric-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        transparent,
+        rgba(56, 193, 90, 0.1),
+        transparent
+      );
+      animation: rotate 4s linear infinite;
+      opacity: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .metric-card:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .metric-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: var(--spacing-md);
+      background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+      color: white;
+      box-shadow: 0 8px 16px rgba(56, 193, 90, 0.4);
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-sm);
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric-change {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      font-size: 0.9rem;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric-change.positive {
+      color: var(--primary-400);
+    }
+
+    .metric-change.negative {
+      color: #ef4444;
+    }
+
+    /* Charts Section */
+    .charts-section {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .charts-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-lg);
+      background: linear-gradient(135deg, var(--text-primary), var(--secondary-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-chart-container, .chart-container {
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .main-chart-container {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .main-chart-container:hover, .chart-container:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-glass), var(--shadow-premium);
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .chart-header h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+       
+    }
+
+    .chart-controls {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+
+    .btn-chart {
+      padding: var(--spacing-xs) var(--spacing-md);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-chart:hover {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-chart.active {
+      background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+      color: white;
+      box-shadow: 0 4px 12px rgba(56, 193, 90, 0.4);
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 350px;
+      width: 100%;
+    }
+
+    .secondary-charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: var(--spacing-lg);
+    }
+
+    .chart-container .chart-wrapper {
+      height: 260px;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: var(--spacing-xs);
+    }
+
+    /* Table Section */
+    .table-section {
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-glass);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .table-header h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .table-controls {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-container i {
+      position: absolute;
+      left: var(--spacing-sm);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+    }
+
+    .search-container input {
+      padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-xs) 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      color: var(--text-primary);
+      font-family: inherit;
+      width: 280px;
+      transition: var(--transition-smooth);
+    }
+
+    .search-container input:focus {
+      outline: none;
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(56, 193, 90, 0.2);
+    }
+
+    .table-container {
+      overflow-x: unset !important;
+      border: none !important;
+      margin-bottom: var(--spacing-lg);
+      border-radius: var(--border-radius-lg);
+      background: var(--bg-card);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: var(--spacing-md);
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    th:hover {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+    }
+
+    td {
+      padding: var(--spacing-md);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      transition: var(--transition-smooth);
+    }
+
+    tr:hover {
+      background: var(--glass-bg);
+      transform: translateX(4px);
+    }
+
+    tr:hover td {
+      box-shadow: -4px 0 0 var(--primary-500);
+    }
+
+    .status-cell {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--border-radius-lg);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-cell.optimal {
+      background: rgba(56, 193, 90, 0.2);
+      color: var(--primary-400);
+      border: 1px solid rgba(56, 193, 90, 0.3);
+    }
+
+    .status-cell.warning {
+      background: rgba(255, 152, 0, 0.2);
+      color: var(--accent-500);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+
+    .status-cell.critical {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .table-info {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+    }
+
+    .pagination {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+
+    .btn-page {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-weight: 500;
+    }
+
+    .btn-page:hover {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .btn-page.active {
+      background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+      color: white;
+      border-color: var(--primary-500);
+      box-shadow: 0 4px 12px rgba(56, 193, 90, 0.4);
+    }
+
+    /* Footer */
+    .dashboard-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-lg);
+      margin-top: var(--spacing-xl);
+      background: var(--glass-bg);
+      backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .footer-info p {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--spacing-lg);
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-400);
+      transform: translateY(-1px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .metrics-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .secondary-charts {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: var(--spacing-sm);
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+      }
+      
+      .header-controls {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      
+      .metrics-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .chart-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: flex-start;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: flex-start;
+      }
+      
+      .table-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .search-container input {
+        width: 200px;
+      }
+      
+      .table-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+      
+      .dashboard-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+      }
+      
+      .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo h1 {
+        font-size: 2rem;
+      }
+      
+      .logo i {
+        font-size: 2rem;
+      }
+      
+      .metric-value {
+        font-size: 2rem;
+      }
+      
+      .chart-wrapper {
+        height: 250px;
+      }
+      
+      .chart-container .chart-wrapper {
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <h1>EcoPowerPlus</h1>
+      </div>
+      <div class="header-controls">
+        <button class="btn-primary">
+          <i class="fas fa-download"></i>
+          Export Data
+        </button>
+        <div class="theme-toggle">
+          <input type="checkbox" id="theme-switch">
+          <label for="theme-switch">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+      <section class="dashboard-overview">
+        <h2>System Overview</h2>
+        <p>Monitoring sustainable energy production and environmental metrics in real-time with advanced analytics and intelligent insights.</p>
+        <div class="system-status">
+          <span class="status-indicator">
+            <i class="fas fa-power-off"></i> 
+            System Active
+          </span>
+          <span class="last-updated">
+            Last updated: <time id="last-updated-time">Just now</time>
+          </span>
+        </div>
+      </section>
+
+      <section class="metrics-container" id="metrics-container">
+        <!-- Metrics will be dynamically inserted here -->
+      </section>
+      
+      <section class="charts-section">
+        <h2>Real-Time Analytics</h2>
+        
+        <div class="main-chart-container">
+            <div class="chart-header">
+                <h3>Energy Performance</h3>
+            <div class="chart-controls">
+              <button class="btn-chart active" data-period="day">Day</button>
+              <button class="btn-chart" data-period="week">Week</button>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+             <canvas id="energyChart"></canvas>
+          </div>
+        </div>
+
+        <div class="secondary-charts">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Water Quality</h3>
+                <div class="chart-legend">
+                    
+                    <span class="legend-item">
+                    <span class="color-dot" style="background-color: rgba(33, 150, 243, 1);"></span>
+                    process of traitement
+                    </span>
+                </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="waterChart"></canvas>
+                </div>
+            </div>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Environmental Conditions</h3>
+                    <div class="chart-legend">
+                        <span class="legend-item">
+                        <span class="color-dot" style="background-color: #ff9800;"></span>
+                        Temperature
+                        </span>
+                        <span class="legend-item">
+                        <span class="color-dot" style="background-color: #4caf50;"></span>
+                        Luminosity
+                        </span>
+                    </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="environmentChart"></canvas>
+                    </div>
+                </div>
+        </div>
+      </section>
+
+      <section class="table-section">
+        <div class="table-header">
+          <h2>Recent Measurements</h2>
+          <div class="table-controls">
+            <div class="search-container">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Search measurements..." id="table-search">
+            </div>
+            <button class="btn-secondary">
+              <i class="fas fa-filter"></i>
+              Filter
+            </button>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <table id="measurements-table">
+            <thead>
+              <tr>
+                <th>Time <i class="fas fa-sort"></i></th>
+                <th>Voltage (V) <i class="fas fa-sort"></i></th>
+                <th>Current (mA) <i class="fas fa-sort"></i></th>
+                <th>Luminosity <i class="fas fa-sort"></i></th>
+                <th>Temperature (°C) <i class="fas fa-sort"></i></th>
+                <th>Status <i class="fas fa-sort"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table data will be inserted here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="table-footer">
+          <div class="table-info">
+            Showing <span id="showing-entries">1</span> of <span id="total-entries">5</span> days
+          </div>
+          <div class="pagination">
+            <button class="btn-page active">1</button>
+            <button class="btn-page">2</button>
+            <button class="btn-page">3</button>
+            <button class="btn-page">4</button>
+            <button class="btn-page">5</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="dashboard-footer">
+      <div class="footer-info">
+        <p>© 2025 EcoPowerPlus - Sustainable Energy Solutions</p>
+      </div>
+      <div class="footer-links">
+        <a href="nbta_finale2.html"><i class="fas fa-home"></i> Home</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        <a href="#"><i class="fas fa-user-shield"></i> Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const defaultExcelData = {
+      labels: ['0.0h', '1.5h', '3.0h', '4.5h', '6.0h', '7.5h', '9.0h', '10.5h', '12.0h', '13.5h', '15.0h', '16.5h', '18.0h', '19.5h', '21.0h'],
+      temperature: [18.2, 18.38, 18.57, 18.87, 19.18, 19.37, 19.55, 19.43, 19.3, 19.18, 19.06, 18.81, 18.57, 18.44, 18.32],
+      voltage: [0.18, 0.19, 0.18, 0.17, 0.20, 0.19, 0.18, 0.185, 0.195, 0.19, 0.18, 0.187, 0.182, 0.193, 0.188],
+      lux: [503.42, 514.17, 524.93, 263.93, 2.93, 2.93, 2.93, 2.93, 2.93, 7.82, 12.71, 150.54, 288.37, 406.16, 523.95]
+    };
+
+    // Sample data for the dashboard
+    const dashboardData = {
+      metrics: [
+        {
+          id: 'energy-production',
+          title: 'Energy Production',
+          value: '1.08 Wh',
+          change: '+20%',
+          isPositive: true,
+          icon: 'fa-bolt',
+          class: 'energy'
+        },
+        {
+          id: 'water-purity',
+          title: 'Water Purity',
+          value: '86.12%',
+          change: '+7.1%',
+          isPositive: true,
+          icon: 'fa-droplet',
+          class: 'water'
+        },
+        {
+          id: 'plant-growth',
+          title: 'Plant Growth Index',
+          value: '76.6%',
+          change: '+17.8%',
+          isPositive: true,
+          icon: 'fa-seedling',
+          class: 'plant'
+        },
+        {
+          id: 'microbial-activity',
+          title: 'Microbial Activity',
+          value: '86.12%',
+          change: '+9%',
+          isPositive: true,
+          icon: 'fa-microscope',
+          class: 'microbial'
+        }
+      ],
+      
+      energyChartData: {
+        labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+        datasets: [
+          {
+            label: 'Voltage (V)',
+            data: Array.from({ length: 30 }, () => Math.random() * 2 + 11),
+            borderColor: 'rgba(56, 193, 90, 1)',
+            backgroundColor: 'rgba(56, 193, 90, 0.1)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y',
+            pointBackgroundColor: 'rgba(56, 193, 90, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          },
+          {
+            label: 'Current (mA)',
+            data: Array.from({ length: 30 }, () => Math.random() * 0.5 + 1.5),
+            borderColor: 'rgba(33, 150, 243, 1)',
+            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y1',
+            pointBackgroundColor: 'rgba(33, 150, 243, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }
+        ]
+      },
+      
+      waterChartData: {
+        labels: ['Before treatement', 'Day 1', 'Day 3', 'Day 6', 'Day 9'],
+        datasets: [
+          
+          {
+            label: 'After Treatement',
+            data: [1455, 1422, 1150, 695, 202],
+            borderColor: 'rgba(33, 150, 243, 1)',
+            backgroundColor: 'rgba(33, 150, 243, 0.2)',
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: 'rgba(33, 150, 243, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4
+          }
+        ]
+      },
+      
+      environmentChartData: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+          {
+            label: 'Temperature (°C)',
+            data: [22, 23, 25, 24, 21, 20, 22],
+            borderColor: 'rgba(255, 152, 0, 1)',
+            backgroundColor: 'rgba(255, 152, 0, 0.1)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y',
+            pointBackgroundColor: 'rgba(255, 152, 0, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4
+          },
+          {
+            label: 'Luminosity (%)',
+            data: [40, 45, 42, 50, 55, 58, 52],
+            borderColor: 'rgba(76, 175, 80, 1)',
+            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y1',
+            pointBackgroundColor: 'rgba(76, 175, 80, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4
+          }
+        ]
+      },
+      
+      measurementsData: [
+        { time: '2025-01-15 09:00', voltage: 12.4, current: 1.8, ph: 7.2, temperature: 22.5, status: 'optimal' },
+        { time: '2025-01-15 08:00', voltage: 12.3, current: 1.7, ph: 7.1, temperature: 22.0, status: 'optimal' },
+        { time: '2025-01-15 07:00', voltage: 11.9, current: 1.5, ph: 6.9, temperature: 21.8, status: 'warning' },
+        { time: '2025-01-15 06:00', voltage: 12.1, current: 1.6, ph: 7.0, temperature: 21.5, status: 'optimal' },
+        { time: '2025-01-15 05:00', voltage: 12.5, current: 1.9, ph: 7.3, temperature: 22.7, status: 'optimal' },
+        { time: '2025-01-15 04:00', voltage: 10.8, current: 1.3, ph: 6.6, temperature: 20.2, status: 'critical' },
+        { time: '2025-01-15 03:00', voltage: 11.2, current: 1.4, ph: 6.8, temperature: 20.8, status: 'warning' },
+        { time: '2025-01-15 02:00', voltage: 12.0, current: 1.7, ph: 7.1, temperature: 21.6, status: 'optimal' },
+        { time: '2025-01-15 01:00', voltage: 12.2, current: 1.8, ph: 7.2, temperature: 22.0, status: 'optimal' },
+        { time: '2025-01-15 00:00', voltage: 12.4, current: 1.9, ph: 7.3, temperature: 22.5, status: 'optimal' }
+      ]
+    };
+
+    // Utility functions
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleTimeString('en-US', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    }
+
+    function getRandomData(baseValue, variation) {
+      return (baseValue + (Math.random() * variation * 2 - variation)).toFixed(1);
+    }
+
+    // Initialize particle system
+    function initializeParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize GSAP animations
+    function initializeAnimations() {
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Initial page load animation
+      const tl = gsap.timeline();
+      
+      tl.from('.dashboard-header', {
+        y: -50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      })
+      .from('.dashboard-overview', {
+        y: 30,
+        opacity: 0.9,
+        duration: 0.8,
+        ease: 'power3.out'
+      }, '-=0.5')
+      .from('.metric-card', {
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'back.out(1.7)'
+      }, '-=0.4');
+
+      // Scroll-triggered animations
+      ScrollTrigger.batch('.chart-container, .main-chart-container', {
+        onEnter: (elements) => {
+          gsap.from(elements, {
+            y: 3,
+            opacity: 0.9,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out'
+          });
+        },
+        start: 'top 80%'
+      });
+
+      ScrollTrigger.create({
+        trigger: '.table-section',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.from('.table-section', {
+            y: 60,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+          });
+        }
+      });
+    }
+
+    // Initialize metrics
+    function initializeMetrics() {
+      const metricsContainer = document.getElementById('metrics-container');
+      metricsContainer.innerHTML = '';
+      
+      dashboardData.metrics.forEach((metric, index) => {
+        const metricCard = document.createElement('div');
+        metricCard.className = `metric-card ${metric.class}`;
+        metricCard.innerHTML = `
+          <div class="metric-icon">
+            <i class="fas ${metric.icon}"></i>
+          </div>
+          <div class="metric-title">${metric.title}</div>
+          <div class="metric-value">${metric.value}</div>
+          <div class="metric-change ${metric.isPositive ? 'positive' : 'negative'}">
+            <i class="fas ${metric.isPositive ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+            ${metric.change} from last week
+          </div>
+        `;
+        
+        // Add click event for card interaction
+        metricCard.addEventListener('click', () => {
+          gsap.to(metricCard, {
+            scale: 0.95,
+            duration: 0.1,
+            yoyo: true,
+            repeat: 1,
+            ease: 'power2.out'
+          });
+        });
+        
+        metricsContainer.appendChild(metricCard);
+      });
+    }
+      const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      const weeklyVoltages = [0.2, 0.3, 0.35, 0.42, 0.5, 0.55, 0.6]; // ➕ valeurs croissantes comme demandé
+
+    // Initialize charts
+    function initializeCharts() {
+    
+      // Chart.js configuration
+      Chart.defaults.font.family = 'Inter';
+      Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary');
+      const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      const weeklyVoltages = [0.2, 0.3, 0.35, 0.42, 0.5, 0.55, 0.6];
+
+      dashboardData.energyChartData.labels = weekLabels;
+      dashboardData.energyChartData.datasets[0].data = weeklyVoltages;
+
+      // Energy chart
+      const energyCtx = document.getElementById('energyChart').getContext('2d');
+      const energyChart = new Chart(energyCtx, {
+        type: 'line',
+        data: dashboardData.energyChartData,  
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+                display: true ,
+                position: 'top',
+                align: 'end',
+                labels: {
+                    boxWidth: 12,
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    padding: 20,
+                    font: {
+                    size: 12,
+                    weight: '500'
+                    }
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: 'rgba(148, 163, 184, 0.2)',
+              borderWidth: 1,
+              cornerRadius: 12,
+              displayColors: true,
+              usePointStyle: true
+            }
+          },
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#FFFFFF'
+              }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Voltage (V)',
+                font:{
+                  weight: 'bold'
+                },
+                color: '#FFFFFF',
+                font: {
+                  size: 12,
+                  weight: '500'
+                }
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)'
+              },
+              ticks: {
+                font: {
+                  weight: 'bold'
+                },
+                color: '#FFFFFF'
+              },
+              min: 0,
+              max: 1.2,
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'Current (mA)',
+                data: Array(7).fill(1.8),
+                color: '#F0F0F0',
+                font: {
+                  size: 12,
+                  weight: '500'
+                }
+              },
+              grid: {
+                drawOnChartArea: false,
+                color: 'rgba(148, 163, 184, 0.1)'
+              },
+              ticks: {
+                font:{weight: 'bold'},
+                color: '#F0F0F0'
+              },
+              suggestedMin: 1,
+              suggestedMax: 2.5
+            }
+          },
+        elements: {
+          line: {
+            borderWidth: 3
+          },
+          point: {
+            hoverRadius: 8
+          }
+        }
+      }
+    });
+    energyChart.data.labels = weekLabels;
+    energyChart.data.datasets[0].data = weeklyVoltages;
+    energyChart.update();
+
+
+
+      // Water chart
+      const waterCtx = document.getElementById('waterChart').getContext('2d');
+      const waterChart = new Chart(waterCtx, {
+        type: 'line',
+        data: dashboardData.waterChartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+              position: 'top',
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: 'rgba(148, 163, 184, 0.2)',
+              borderWidth: 1,
+              cornerRadius: 12
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#FFFFFF'
+              }
+            },
+            y: {
+              suggestedMin: 100,
+              suggestedMax: 1500,
+              title: {
+                display: true,
+                text: 'Water Quality (%) "Analyse DCO"',
+                color: '#FFFFFF',
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              }
+            }
+          },
+          elements: {
+            line: {
+              borderWidth: 3
+            },
+            point: {
+              hoverRadius: 8
+            }
+          }
+        }
+      });
+
+      // Environment chart
+      const environmentCtx = document.getElementById('environmentChart').getContext('2d');
+      const environmentChart = new Chart(environmentCtx, {
+        type: 'line',
+        data: dashboardData.environmentChartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: 'rgba(148, 163, 184, 0.2)',
+              borderWidth: 1,
+              cornerRadius: 12
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#FFFFFF'
+              }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Temperature (°C)',
+                color: '#FFFFFF',
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              suggestedMin: 18,
+              suggestedMax: 28
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'luminosity (%)',
+                color: '#FFFFFF',
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                drawOnChartArea: false
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              suggestedMin: 30,
+              suggestedMax: 70
+            }
+          },
+          elements: {
+            line: {
+              borderWidth: 3
+            },
+            point: {
+              hoverRadius: 8
+            }
+          }
+        }
+      });
+
+      // Handle chart period buttons
+      const chartButtons = document.querySelectorAll('.btn-chart');
+      chartButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          chartButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          
+          // Animate button click
+          gsap.to(button, {
+            scale: 0.95,
+            duration: 0.1,
+            yoyo: true,
+            repeat: 1,
+            ease: 'power2.out'
+          });
+          
+          // Update chart data based on period
+          const period = button.dataset.period;
+          updateChartData(energyChart, period);
+        });
+      });
+
+    
+      window.charts = {
+        energyChart,
+        environmentChart
+      };
+      return { energyChart, waterChart, environmentChart };
+      
+    }
+    function computeDailyAverageVoltages(labels, voltages) {
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const voltagesByDay = [[], [], [], [], [], [], []];
+
+      for (let i = 0; i < voltages.length; i++) {
+        const dayIndex = i % 7; // tourne sur les 7 jours
+        voltagesByDay[dayIndex].push(voltages[i]);
+      }
+
+      const averages = voltagesByDay.map(dayVoltages => {
+        const sum = dayVoltages.reduce((acc, val) => acc + val, 0);
+        return parseFloat((sum / dayVoltages.length).toFixed(3));
+      });
+
+      return { days, averages };
+}
+
+    // Update chart data based on selected period
+    function updateChartData(chart, period) {
+      let labels, voltageData, currentData;
+      
+      switch(period) {
+        case 'day':
+          labels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+          voltageData = Array.from({ length: 24 }, () => Math.random() * 2 + 11);
+          currentData = Array.from({ length: 24 }, () => Math.random() * 0.5 + 1.5);
+          break;
+        case 'week':
+          labels = weekLabels;
+          voltageData = weeklyVoltages;
+          currentData = [1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4]; // ou ce que tu veux
+          break;
+
+        case 'month':
+        default:
+          labels = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
+          voltageData = Array.from({ length: 30 }, () => Math.random() * 2 + 11);
+          currentData = Array.from({ length: 30 }, () => Math.random() * 0.5 + 1.5);
+          break;
+      }
+      
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = voltageData;
+      chart.data.datasets[1].data = currentData;
+      chart.update('active');
+    }
+
+    // Initialize table
+    function initializeTable() {
+      const tableBody = document.querySelector('#measurements-table tbody');
+      tableBody.innerHTML = '';
+      
+      dashboardData.measurementsData.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.style.animationDelay = `${index * 0.05}s`;
+        
+        row.innerHTML = `
+          <td>${formatDate(item.time)}</td>
+          <td>${item.voltage.toFixed(3)}</td>
+          <td>${item.current.toFixed(3)}</td>
+          <td>${item.ph.toFixed(3)}</td>
+          <td>${item.temperature.toFixed(3)}</td>
+          <td><div class="status-cell ${item.status}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</div></td>
+        `;
+        
+        tableBody.appendChild(row);
+      });
+      
+      initializeTableSorting();
+      initializeTableSearch();
+    }
+
+    // Table sorting functionality
+    function initializeTableSorting() {
+      const tableHeaders = document.querySelectorAll('#measurements-table th');
+      
+      tableHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => {
+          const sortDirection = header.getAttribute('data-sort') === 'asc' ? 'desc' : 'asc';
+          
+          tableHeaders.forEach(th => th.removeAttribute('data-sort'));
+          header.setAttribute('data-sort', sortDirection);
+          
+          sortTable(index, sortDirection);
+          
+          // Update sort icons
+          tableHeaders.forEach(th => {
+            const icon = th.querySelector('i');
+            icon.className = 'fas fa-sort';
+          });
+          
+          const icon = header.querySelector('i');
+          icon.className = `fas fa-sort-${sortDirection === 'asc' ? 'up' : 'down'}`;
+          
+          // Animate sort
+          gsap.fromTo('#measurements-table tbody tr', 
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.3, stagger: 0.02, ease: 'power2.out' }
+          );
+        });
+      });
+    }
+
+    function sortTable(columnIndex, direction) {
+      const tableBody = document.querySelector('#measurements-table tbody');
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+      
+      rows.sort((a, b) => {
+        const aValue = a.children[columnIndex].textContent.trim();
+        const bValue = b.children[columnIndex].textContent.trim();
+        
+        const aNum = parseFloat(aValue);
+        const bNum = parseFloat(bValue);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          return direction === 'asc' ? aNum - bNum : bNum - aNum;
+        }
+        
+        return direction === 'asc' 
+          ? aValue.localeCompare(bValue) 
+          : bValue.localeCompare(aValue);
+      });
+      
+      rows.forEach(row => tableBody.appendChild(row));
+    }
+
+    // Table search functionality
+    function initializeTableSearch() {
+      const searchInput = document.getElementById('table-search');
+      
+      searchInput.addEventListener('input', debounce(() => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const rows = document.querySelectorAll('#measurements-table tbody tr');
+        
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          const shouldShow = text.includes(searchTerm);
+          row.style.display = shouldShow ? '' : 'none';
+        });
+        
+        updateEntriesCount();
+      }, 300));
+    }
+
+    // Debounce function for search
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    function updateEntriesCount() {
+      const visibleRows = document.querySelectorAll('#measurements-table tbody tr:not([style*="display: none"])');
+      const totalRows = document.querySelectorAll('#measurements-table tbody tr');
+      
+      document.getElementById('showing-entries').textContent = visibleRows.length;
+      document.getElementById('total-entries').textContent = totalRows.length;
+    }
+
+    // Theme functionality
+    function initializeTheme() {
+      const themeSwitch = document.getElementById('theme-switch');
+      const body = document.body;
+      
+      // Check saved theme
+      const savedTheme = localStorage.getItem('ecopowerplus-theme');
+      if (savedTheme === 'light') {
+        body.classList.add('light-theme');
+        themeSwitch.checked = true;
+      }
+      
+      themeSwitch.addEventListener('change', () => {
+        const isLight = themeSwitch.checked;
+        
+        if (isLight) {
+          body.classList.add('light-theme');
+          localStorage.setItem('ecopowerplus-theme', 'light');
+        } else {
+          body.classList.remove('light-theme');
+          localStorage.setItem('ecopowerplus-theme', 'dark');
+        }
+        
+        // Animate theme transition
+        gsap.to(body, {
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+    }
+
+    // Real-time data updates
+    function startRealTimeUpdates() {
+      // Update time display
+      setInterval(() => {
+        document.getElementById('last-updated-time').textContent = new Date().toLocaleTimeString();
+      }, 1000);
+
+      // Simulate real-time data updates
+      setInterval(() => {
+        // Update a random metric value
+        const metricCards = document.querySelectorAll('.metric-value');
+        const randomCard = metricCards[Math.floor(Math.random() * metricCards.length)];
+        
+        if (randomCard) {
+          const currentValue = parseFloat(randomCard.textContent);
+          const change = (Math.random() - 0.5) * 0.2;
+          const newValue = Math.max(0, currentValue + change);
+          
+          gsap.to(randomCard, {
+            scale: 1.1,
+            duration: 0.2,
+            yoyo: true,
+            repeat: 1,
+            ease: 'power2.out',
+            onComplete: () => {
+              randomCard.textContent = newValue.toFixed(2) + (randomCard.textContent.includes('%') ? '%' : ' kWh');
+            }
+          });
+        }
+      }, 5000);
+    }
+      function parseExcelData(data) {
+        const labels = [];
+        const temperatures = [];
+        const voltages = [];
+        const luminosities = [];
+        const { days, averages } = computeDailyAverageVoltages(labels, voltages);
+        if (window.charts.energyChart) {
+          const chart = window.charts.energyChart;
+          chart.data.labels = days;
+          chart.data.datasets[0].data = averages;
+          chart.update();
+        }
+
+        for (let i = 1; i < data.length; i++) {
+          const row = data[i];
+          if (!row[0] || !row[1] || !row[2] || !row[3]) continue;
+
+          const staticLabels = ['15:00', '16:30', '18:00', '19:30', '21:00', '22:30', '00:00', '01:30', '03:00', '04:30', '06:00', '07:30', '09:00', '10:30', '12:00', '13:30'];
+          labels.push(staticLabels[labels.length]);
+
+          temperatures.push(parseFloat(row[1].toString().replace(',', '.')));
+          voltages.push(parseFloat(row[2].toString().replace(',', '.')));
+          luminosities.push(parseFloat(row[3].toString().replace(',', '.')));
+        }
+
+        // Inject into your energyChart
+        if (window.charts.environmentChart) {
+          const chart = window.charts.environmentChart;
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = temperatures;
+          chart.data.datasets[1].data = luminosities; // comme proxy pour humidité
+          chart.update();
+        }
+        // Ajoute ceci pour mettre à jour le graphe de voltage
+        if (window.charts.energyChart) {
+          const chart = window.charts.energyChart;
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = voltages;
+          chart.update();
+        }
+
+        const tableBody = document.querySelector('#measurements-table tbody');
+          tableBody.innerHTML = '';
+
+          for (let i = 0; i < labels.length; i++) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${labels[i]}</td>
+              <td>${voltages[i].toFixed(2)}</td>
+              <td>--</td> <!-- courant si tu l'as -->
+              <td>${luminosities[i].toFixed(2)}</td>
+              <td>${temperatures[i].toFixed(2)}</td>
+              <td><div class="status-cell">Imported</div></td>
+            `;
+            tableBody.appendChild(row);
+      }
+
+        // You can also update other charts similarly
+      }
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize all components
+      initializeParticles();
+      initializeTheme();
+      initializeAnimations();
+      initializeMetrics();
+      initializeCharts();
+      initializeTable();
+      startRealTimeUpdates();
+
+      
+      // Add global keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        // Toggle theme with Ctrl/Cmd + T
+        if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+          e.preventDefault();
+          document.getElementById('theme-switch').click();
+        }
+      });
+
+      console.log('🌱 EcoPowerPlus Dashboard initialized successfully!');
+      parseExcelData([
+        ["Time", "Temp", "Volt", "Lux"],
+        ...defaultExcelData.labels.map((label, i) => [
+          parseFloat(label) * 3600,
+          defaultExcelData.temperature[i],
+          defaultExcelData.voltage[i],
+          defaultExcelData.lux[i]
+        ])
+      ]);
+
+    });
+  </script>
+</body>
+</html>

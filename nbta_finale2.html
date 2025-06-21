@@ -1,0 +1,2100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPower 3X - Wastewater Purification, Electricity Generation & Plant Growth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+/* Base Styles */
+:root {
+  --primary-color: #1b4d3e;
+  --secondary-color: #3498db;
+  --accent-color: #27ae60;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --gray-color: #6c757d;
+  --light-gray: #e9ecef;
+  
+  --transition-speed: 0.3s;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 64px;
+  
+  --border-radius: 16px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.16);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+  color: var(--dark-color);
+  background: linear-gradient(to bottom, #ecfdf5, #e0f7fa);
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+.section-subtitle {
+  color: #24b076; /* ou essaie #E0F7FA ou #DDDDDD */
+  text-shadow: 0 1px 3px rgba(237, 230, 230, 0.644); /* pour rehausser la netteté */
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+z {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+.section-subtitle2 {
+  color: #052729; /* ou essaie #E0F7FA ou #DDDDDD */
+  text-shadow: 0 1px 3px rgba(240, 238, 238, 0.644); /* pour rehausser la netteté */
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+/* Header Styles */
+.header {
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(27, 77, 62, 0.9), rgba(52, 152, 219, 0.8)),
+              url('https://images.pexels.com/photos/3571551/pexels-photo-3571551.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover no-repeat;
+  color: var(--light-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.header-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
+
+.project-title {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--light-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.project-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--light-color);
+  margin-bottom: var(--spacing-lg);
+  max-width: 800px;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+.icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: transform var(--transition-speed);
+}
+
+.icon-box:hover {
+  transform: translateY(-5px);
+}
+
+.icon-box i {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--light-color);
+  animation: bounce 2s infinite;
+}
+
+.scroll-down i {
+  font-size: 1.5rem;
+  margin-top: var(--spacing-xs);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Navbar Styles */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-sm) 0;
+  z-index: 1000;
+  transition: all var(--transition-speed);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.nav-link {
+  color: var(--dark-color);
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  transform: translateY(-2px);
+}
+
+/* Section Styles */
+.section {
+  padding: var(--spacing-xl) 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.section:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: var(--gray-color);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.section-content {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.section-content.reverse {
+  flex-direction: row-reverse;
+}
+
+.text-content,
+.visual-content {
+  flex: 1;
+}
+
+.step-indicator {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Key Benefits */
+.key-benefits {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.benefit {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.benefit:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.benefit i {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.benefit h3 {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Analysis Parameters */
+.analysis-parameters {
+  margin-top: var(--spacing-md);
+}
+
+.parameter {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.parameter i {
+  color: var(--secondary-color);
+  margin-right: var(--spacing-xs);
+}
+
+.parameter-range {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.range-bar {
+  flex: 1;
+  height: 8px;
+  background-color: var(--light-gray);
+  border-radius: 4px;
+  position: relative;
+}
+
+.range-indicator {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Analysis Illustration */
+.analysis-illustration {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.water-container {
+  width: 80%;
+  height: 200px;
+  background-color: rgba(52, 152, 219, 0.2);
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.water-waves {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: 50%;
+  left: -50%;
+  background: rgba(52, 152, 219, 0.4);
+  border-radius: 40%;
+  animation: waves 6s linear infinite;
+}
+
+@keyframes waves {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.analysis-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.analysis-icons i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: var(--spacing-sm);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Filtration Stages */
+.filtration-stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.stage:hover {
+  transform: translateX(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.stage-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  background-color: rgba(27, 77, 62, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+}
+
+/* Filtration Illustration */
+.filtration-illustration {
+  position: relative;
+  min-height: 400px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-layer {
+  height: 80px;
+  margin-bottom: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.sand-filter {
+  background-color: #e6c35a;
+  background-image: radial-gradient(#d4af37 2px, transparent 2px);
+  background-size: 8px 8px;
+}
+
+.textile-filter {
+  background-color: #f1f2f6;
+  background-image: linear-gradient(45deg, #e6e7eb 25%, transparent 25%, transparent 50%, #e6e7eb 50%, #e6e7eb 75%, transparent 75%, transparent);
+  background-size: 10px 10px;
+}
+
+.carbon-filter {
+  background-color: #2f3542;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px);
+  background-size: 8px 8px;
+}
+
+.label {
+  color: var(--dark-color);
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.carbon-filter .label {
+  color: var(--light-color);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.water-flow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.drop {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: rgba(52, 152, 219, 0.7);
+  border-radius: 50%;
+  top: -10px;
+  animation: drop 4s linear infinite;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+.drop1 { left: 30%; animation-delay: 0s; }
+.drop2 { left: 50%; animation-delay: 1.5s; }
+.drop3 { left: 70%; animation-delay: 3s; }
+
+@keyframes drop {
+  0% {
+    top: -10px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Plant System - Updated for 3D-printed pot */
+.plant-system {
+  position: relative;
+  min-height: 400px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.pot-container {
+  position: relative;
+  height: 450px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+}
+
+.floating-plant {
+  position: relative;
+  height: 120px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: -20px;
+}
+
+.plant-leaves {
+  width: 140px;
+  height: 90px;
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+  clip-path: ellipse(70px 45px at 50% 50%);
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+  animation: plantSway 4s ease-in-out infinite;
+}
+
+@keyframes plantSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+.plant-stem {
+  width: 12px;
+  height: 60px;
+  background: linear-gradient(to bottom, #2ecc71, #27ae60);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(39, 174, 96, 0.3);
+}
+
+.printed-pot {
+  width: 280px;
+  height: 320px;
+  background: linear-gradient(145deg, #ecf0f1, #bdc3c7);
+  border-radius: var(--border-radius);
+  position: relative;
+  box-shadow: 
+    inset 0 4px 8px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.pot-layer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.soil-layer-1 {
+  height: 60px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  background-image: radial-gradient(rgba(139, 69, 19, 0.8) 2px, transparent 2px);
+  background-size: 6px 6px;
+}
+
+.graphite-layer {
+  height: 50px;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 8px 8px;
+  border-top: 2px solid #1a252f;
+  border-bottom: 2px solid #1a252f;
+}
+
+.soil-layer-2 {
+  height: 60px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  background-image: radial-gradient(rgba(139, 69, 19, 0.8) 2px, transparent 2px);
+  background-size: 6px 6px;
+}
+
+.wastewater-layer {
+  height: 80px;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.6), rgba(41, 128, 185, 0.8));
+  position: relative;
+  overflow: hidden;
+}
+
+.wastewater-waves {
+  position: absolute;
+  width: 150%;
+  height: 100%;
+  top: 0;
+  left: -25%;
+  background: rgba(52, 152, 219, 0.3);
+  border-radius: 40%;
+  animation: wastewaterWaves 8s linear infinite;
+}
+
+@keyframes wastewaterWaves {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.surface-layer {
+  height: 70px;
+  background: linear-gradient(to bottom, rgba(236, 253, 245, 0.9), rgba(224, 247, 250, 0.9));
+  position: relative;
+}
+
+.cathode-surface {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(231, 76, 60, 0.9);
+  color: var(--light-color);
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.anode-buried {
+  color: var(--light-color);
+  background-color: rgba(52, 73, 94, 0.9);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.microbes {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.microbes i {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  animation: microbeFloat 3s ease-in-out infinite;
+}
+
+.microbes i:nth-child(2) { animation-delay: 1s; }
+.microbes i:nth-child(3) { animation-delay: 2s; }
+
+@keyframes microbeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.wire-connection {
+  position: absolute;
+  width: 85%;
+  height: 120px;
+  top: 35%;
+  left: 7.5%;
+  border: 3px solid #95a5a6;
+  border-top: none;
+  border-radius: 0 0 60px 60px;
+  z-index: 15;
+}
+
+.electron-flow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.electron {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #f39c12;
+  border-radius: 50%;
+  animation: electronFlow 6s linear infinite;
+  box-shadow: 0 0 8px rgba(243, 156, 18, 0.8);
+}
+
+.e1 { left: 20%; animation-delay: 0s; }
+.e2 { left: 50%; animation-delay: 2s; }
+.e3 { left: 80%; animation-delay: 4s; }
+
+@keyframes electronFlow {
+  0% {
+    top: 45%;
+    left: 20%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    top: 75%;
+    left: 20%;
+  }
+  70% {
+    top: 75%;
+    left: 80%;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 45%;
+    left: 80%;
+    opacity: 0;
+  }
+}
+
+/* Dashboard CTA Section */
+#dashboard {
+  background: linear-gradient(135deg, rgba(27, 77, 62, 0.9), rgba(52, 152, 219, 0.8));
+  color: var(--light-color);
+  text-align: center;
+}
+
+.dashboard-cta {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+}
+
+.dashboard-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, rgba(0, 168, 255, 0.2), rgba(0, 255, 180, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-button i {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.dashboard-button:hover {
+  background: linear-gradient(135deg, rgba(0, 168, 255, 0.4), rgba(0, 255, 180, 0.2));
+  box-shadow: 0 12px 40px rgba(0, 255, 180, 0.3);
+  transform: translateY(-3px);
+}
+
+.dashboard-button:hover i {
+  transform: rotate(8deg) scale(1.1);
+}
+/* Process Details */
+.process-details {
+  margin-top: var(--spacing-md);
+}
+
+.detail-item {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.detail-item:hover {
+  transform: translateX(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.detail-item h4 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+.detail-item h4 i {
+  color: var(--secondary-color);
+}
+
+/* Output Metrics */
+.output-metrics {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.metric {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed);
+}
+
+.metric:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric-label {
+  color: var(--gray-color);
+}
+
+/* Applications */
+.applications {
+  margin-top: var(--spacing-md);
+}
+
+.application-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.application {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.application:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.application i {
+  color: var(--secondary-color);
+}
+
+/* Output Illustration - Updated for 3 outputs */
+.output-illustration {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  text-align: center;
+}
+
+.water-output, .electricity-output, .plant-output {
+  flex: 1;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed);
+}
+
+.water-output:hover, .electricity-output:hover, .plant-output:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+}
+
+.water-drops, .lightning, .plant-growth {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin-bottom: var(--spacing-sm);
+}
+
+.water-drops::before {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background-color: rgba(52, 152, 219, 0.8);
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+  top: 30px;
+  left: 30px;
+  animation: waterDrop 3s ease-in-out infinite;
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+@keyframes waterDrop {
+  0%, 100% {
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.3);
+  }
+}
+
+.lightning::before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 70px;
+  background-color: #f39c12;
+  clip-path: polygon(50% 0%, 0% 100%, 50% 70%, 100% 100%);
+  top: 15px;
+  left: 38px;
+  animation: lightning 2s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(243, 156, 18, 0.6);
+}
+
+@keyframes lightning {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.plant-growth::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+  clip-path: ellipse(20px 25px at 50% 50%);
+  top: 20px;
+  left: 30px;
+  animation: plantGrow 4s ease-in-out infinite;
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.plant-growth::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 30px;
+  background: linear-gradient(to bottom, #2ecc71, #27ae60);
+  border-radius: 3px;
+  top: 70px;
+  left: 47px;
+  animation: plantGrow 4s ease-in-out infinite;
+}
+
+@keyframes plantGrow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Graph Container */
+.graph-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-md);
+  backdrop-filter: blur(5px);
+}
+
+.graph-container h3 {
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: var(--spacing-lg) 0 var(--spacing-md);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
+
+.footer-info h3 {
+  color: var(--light-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.footer-links a {
+  color: var(--light-color);
+  font-size: 1.5rem;
+  transition: transform var(--transition-speed);
+}
+
+.footer-links a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .section-content {
+    flex-direction: column;
+  }
+  
+  .section-content.reverse {
+    flex-direction: column;
+  }
+  
+  .text-content, .visual-content {
+    width: 100%;
+  }
+  
+  .key-benefits, .output-metrics, .output-illustration {
+    flex-direction: column;
+  }
+
+  .application-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-title {
+    font-size: 3rem;
+  }
+  
+  .project-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .header-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .project-title {
+    font-size: 2.5rem;
+  }
+  
+  .header-icons {
+    flex-direction: column;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .pot-container {
+    width: 250px;
+  }
+  
+  .printed-pot {
+    width: 230px;
+  }
+}
+
+@media (max-width: 576px) {
+  .project-title {
+    font-size: 2rem;
+  }
+  
+  .project-subtitle {
+    font-size: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .benefit i, .application i {
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    padding: var(--spacing-xs);
+    font-size: 0.875rem;
+  }
+  
+  .pot-container {
+    width: 200px;
+  }
+  
+  .printed-pot {
+    width: 180px;
+    height: 280px;
+  }
+  
+  .pot-layer {
+    font-size: 0.75rem;
+  }
+}
+    </style>
+  </head>
+  <body>
+
+    <header class="header" id="header">
+      <div class="container">
+        <div class="header-content">
+          <h1 class="project-title">EcoPower<span class="highlight">3X</span></h1>
+          <h2 class="project-subtitle">Wastewater Purification, Electricity Generation & Plant Growth</h2>
+          <div class="header-icons">
+            <div class="icon-box">
+              <i class="fas fa-tint"></i>
+              <span>Purified Water</span>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-bolt"></i>
+              <span>Electricity</span>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="icon-box">
+              <i class="fas fa-seedling"></i>
+              <span>Plant Growth</span>
+            </div>
+          </div>
+          <a href="#introduction" class="scroll-down">
+            <span>Learn More</span>
+            <i class="fas fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="logo">EcoPower<span class="highlight">3X</span></div>
+        <div class="nav-links">
+          <a href="#introduction" class="nav-link">Introduction</a>
+          <a href="#step1" class="nav-link">Analysis</a>
+          <a href="#step2" class="nav-link">Filtration</a>
+          <a href="#step3" class="nav-link">Plant System</a>
+          <a href="#step4" class="nav-link">Triple Output</a>
+          <a href="dashboard_nbta2.html" class="nav-link">Dashboard</a>
+        </div>
+      </div>
+    </nav>
+    
+    <main>
+      <section id="introduction" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Revolutionary Triple-Output Solution</h2>
+            <p class="section-subtitle">Harnessing nature's power for sustainable water treatment, energy generation, and plant cultivation</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Our groundbreaking EcoPower 3X system represents the next evolution in sustainable technology, combining advanced phytoremediation with microbial fuel cell innovation. Using the remarkable <em>Pistia stratiotes</em> plant in a specially designed 3D-printed floating pot system, our process creates an unprecedented triple output: purified water, renewable electricity, and enhanced plant growth.</p>
+              <div class="key-benefits">
+                <div class="benefit">
+                  <i class="fas fa-leaf"></i>
+                  <h3>Sustainable</h3>
+                  <p>100% natural biological process with zero emissions</p>
+                </div>
+                <div class="benefit">
+                  <i class="fas fa-sync-alt"></i>
+                  <h3>Triple Output</h3>
+                  <p>Three valuable products from a single system</p>
+                </div>
+                <div class="benefit">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                  <h3>Scalable</h3>
+                  <p>Adaptable for homes, communities, or industrial use</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="graph-container">
+                <h3>System Efficiency Comparison</h3>
+                <canvas id="efficiencyChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step1" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 1</div>
+            <h2 class="section-title">Advanced Wastewater Analysis</h2>
+            <p class="section-subtitle">Comprehensive characterization for optimal treatment</p>
+          </div>
+          <div class="section-content reverse">
+            <div class="text-content">
+              <p>Before treatment begins, our advanced analysis system evaluates wastewater composition and contaminant levels with precision. This critical step enables us to optimize the purification process for maximum efficiency across all three output streams.</p>
+              <div class="analysis-parameters">
+                <div class="parameter">
+                  <i class="fas fa-vial"></i>
+                  <h4>pH Balance Assessment</h4>
+                  <div class="parameter-range">
+                    <span>Acidic</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 60%"></div>
+                    </div>
+                    <span>Alkaline</span>
+                  </div>
+                </div>
+                <div class="parameter">
+                  <i class="fas fa-thermometer-half"></i>
+                  <h4>Temperature Monitoring</h4>
+                  <div class="parameter-range">
+                    <span>Cold</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 40%"></div>
+                    </div>
+                    <span>Hot</span>
+                  </div>
+                </div>
+                <div class="parameter">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <h4>Contaminant Levels</h4>
+                  <div class="parameter-range">
+                    <span>Low</span>
+                    <div class="range-bar">
+                      <div class="range-indicator" style="left: 75%"></div>
+                    </div>
+                    <span>High</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="analysis-illustration">
+                <div class="water-container">
+                  <div class="water-waves"></div>
+                  <div class="analysis-icons">
+                    <i class="fas fa-microscope"></i>
+                    <i class="fas fa-flask"></i>
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step2" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 2</div>
+            <h2 class="section-title">Multi-Stage Preliminary Filtration</h2>
+            <p class="section-subtitle">Preparing wastewater for biological processing</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Before biological treatment, wastewater undergoes sophisticated preliminary filtration to remove larger particles, debris, and select chemical contaminants. This preparation optimizes conditions for the plant-based purification system and enhances overall system performance.</p>
+              <div class="filtration-stages">
+                <div class="stage">
+                  <div class="stage-number">01</div>
+                  <h4>Coarse Filtration</h4>
+                  <p>Sand and gravel filters remove larger debris and suspended particles</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">02</div>
+                  <h4>Fine Mesh Filtration</h4>
+                  <p>Advanced textile screens capture microscopic suspended solids</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">03</div>
+                  <h4>Carbon Adsorption</h4>
+                  <p>Activated carbon removes chemicals, odors, and dissolved organics</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="filtration-illustration">
+                <div class="filter-layer sand-filter">
+                  <div class="label">Sand Filter</div>
+                </div>
+                <div class="filter-layer textile-filter">
+                  <div class="label">Textile Filter</div>
+                </div>
+                <div class="filter-layer carbon-filter">
+                  <div class="label">Carbon Filter</div>
+                </div>
+                <div class="water-flow">
+                  <div class="drop drop1"></div>
+                  <div class="drop drop2"></div>
+                  <div class="drop drop3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step3" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 3</div>
+            <h2 class="section-title">3D-Printed Floating Plant System</h2>
+            <p class="section-subtitle">Revolutionary architecture for triple-output generation</p>
+          </div>
+          <div class="section-content reverse">
+            <div class="text-content">
+              <p>Our innovative system features <em>Canna indica</em> plants floating in a specially designed 3D-printed pot with optimized layer architecture. This groundbreaking setup combines phytoremediation with Plant Microbial Fuel Cell (PMFC) technology while promoting accelerated plant growth through controlled nutrient uptake.</p>
+              <div class="process-details">
+                <div class="detail-item">
+                  <h4><i class="fas fa-layer-group"></i> Multi-Layer Architecture</h4>
+                  <p>Soil layer → Graphite anode layer → Second soil layer → Wastewater layer → Floating plant with partially immersed cathode exposed to air.</p>
+                </div>
+                <div class="detail-item">
+                  <h4><i class="fas fa-filter"></i> Enhanced Phytoremediation</h4>
+                  <p>The floating <em>Canna indica</em> plant efficiently filters pollutants through its extensive root system while accessing optimal nutrients for accelerated growth.</p>
+                </div>
+                <div class="detail-item">
+                  <h4><i class="fas fa-bolt"></i> Optimized Electricity Generation</h4>
+                  <p>Bacteria in the graphite layer break down organic matter, generating electrons captured by the buried anode and transferred to the surface cathode.</p>
+                </div>
+                <div class="detail-item">
+                  <h4><i class="fas fa-seedling"></i> Accelerated Plant Growth</h4>
+                  <p>The controlled floating environment provides optimal nutrient access, resulting in faster growth rates and increased biomass production.</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="plant-system">
+                <div class="pot-container">
+                  <div class="floating-plant">
+                    <div class="plant-leaves"></div>
+                    <div class="plant-stem"></div>
+                  </div>
+                  <div class="printed-pot">
+                    <div class="pot-layer surface-layer">
+                      <div class="cathode-surface">Cathode (Air Exposed)</div>
+                    </div>
+                    <div class="pot-layer wastewater-layer">
+                      <div class="wastewater-waves"></div>
+                      <span style="color: white; font-size: 0.9rem;">Wastewater Layer</span>
+                    </div>
+                    <div class="pot-layer soil-layer-2">
+                      <span style="color: white;">Second Soil Layer</span>
+                    </div>
+                    <div class="pot-layer graphite-layer">
+                      <div class="anode-buried">Anode (Graphite)</div>
+                      <div class="microbes">
+                        <i class="fas fa-bacterium"></i>
+                        <i class="fas fa-bacterium"></i>
+                        <i class="fas fa-bacterium"></i>
+                      </div>
+                    </div>
+                    <div class="pot-layer soil-layer-1">
+                      <span style="color: white;">Base Soil Layer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="wire-connection"></div>
+                <div class="electron-flow">
+                  <div class="electron e1"></div>
+                  <div class="electron e2"></div>
+                  <div class="electron e3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step4" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 4</div>
+            <h2 class="section-title">Triple Output Generation</h2>
+            <p class="section-subtitle">Purified water, renewable electricity, and enhanced plant growth</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>The EcoPower 3X system delivers three valuable outputs simultaneously: high-quality purified water suitable for irrigation or further treatment, clean electrical energy for powering devices or storage systems, and accelerated plant growth producing valuable biomass and enhanced ecosystem benefits.</p>
+              
+              <div class="applications">
+                <h4>Applications & Benefits</h4>
+                <div class="application-list">
+                  <div class="application">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>LED Lighting Systems</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-wifi"></i>
+                    <span>IoT & Sensor Networks</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-tint"></i>
+                    <span>Agricultural Irrigation</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-seedling"></i>
+                    <span>Biomass Production</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Device Charging</span>
+                  </div>
+                  <div class="application">
+                    <i class="fas fa-leaf"></i>
+                    <span>Carbon Sequestration</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              
+              <div class="output-illustration">
+                <div class="water-output">
+                    <div class="metric-label">Purification Efficiency</div>
+                    <div class="metric-value">95%</div>
+                    <div class="water-drops"></div>
+                </div>
+                <div class="electricity-output">
+                    <div class="metric-label">Power Generation</div>
+                    <div class="metric-value">75mW</div>
+                    <div class="lightning"></div>
+                </div>
+                <div class="plant-output">
+                    <div class="metric-label">Plant Growth Rate</div>
+                    <div class="metric-value">150%</div>
+                    <div class="plant-growth"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <section id="dashboard" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Real-Time System Monitoring</h2>
+          <z class="section-subtitle2">Access comprehensive metrics, performance analytics, and control systems</z>
+        </div>
+        <div class="dashboard-cta">
+          <a href="dashboard_nbta2.html" class="dashboard-button">
+            <i class="fas fa-gauge-high"></i> <!-- ou -->
+            <i class="fas fa-chart-line"></i>
+            <span>Launch Dashboard</span>
+            <div class="hover-effect"></div>
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3>EcoPower<span class="highlight">3X</span></h3>
+            <p>Revolutionary triple-output solutions for a sustainable future</p>
+          </div>
+          <div class="footer-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 EcoPower3X. All rights reserved.</p>
+          <p>Made by Zakariae-Belarbi</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Navigation highlighting
+      const sections = document.querySelectorAll('.section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      // Update navigation on scroll
+      function updateNavigation() {
+        let currentSection = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
+            currentSection = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === currentSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // Navbar behavior on scroll
+      const navbar = document.getElementById('navbar');
+      const header = document.getElementById('header');
+
+      function updateNavbar() {
+        if (window.scrollY > header.offsetHeight - 100) {
+          navbar.style.backgroundColor = 'rgba(248, 249, 250, 0.95)';
+          navbar.style.boxShadow = 'var(--shadow-md)';
+        } else {
+          navbar.style.backgroundColor = 'rgba(248, 249, 250, 0.95)';
+          navbar.style.boxShadow = 'var(--shadow-sm)';
+        }
+      }
+
+      // Counter animation
+      function animateCounter(elementId, target, duration = 2500) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        let startValue = 0;
+        const increment = target / (duration / 16);
+        
+        const updateCounter = () => {
+          startValue += increment;
+          if (startValue > target) {
+            element.textContent = Math.floor(target);
+          } else {
+            element.textContent = Math.floor(startValue);
+            requestAnimationFrame(updateCounter);
+          }
+        };
+        
+        updateCounter();
+      }
+
+      // Initialize counters when in viewport
+      function initCounters() {
+        const step4Section = document.getElementById('step4');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter('purification-percent', 95);
+              animateCounter('milliwatts', 75);
+              animateCounter('growth-rate', 150);
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        if (step4Section) {
+          observer.observe(step4Section);
+        }
+      }
+
+      // Event Listeners
+      window.addEventListener('scroll', () => {
+        updateNavigation();
+        updateNavbar();
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        updateNavigation();
+        updateNavbar();
+        initCounters();
+        
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
+
+      // Initialize GSAP ScrollTrigger
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
+          gsap.registerPlugin(ScrollTrigger);
+          initAnimations();
+        }
+      });
+
+      function initAnimations() {
+        // Dashboard Section Animation
+        // Dashboard Section Animation - Enhanced
+        gsap.from('#dashboard .section-title', {
+        scrollTrigger: {
+            trigger: '#dashboard',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: -40,
+        scale: 0.95,
+        duration: 1,
+        ease: 'power4.out'
+        });
+
+        gsap.from('#dashboard .section-subtitle', {
+        scrollTrigger: {
+            trigger: '#dashboard',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: -20,
+        duration: 1,
+        delay: 0.3,
+        ease: 'power2.out'
+        });
+
+        gsap.from('.dashboard-button', {
+        scrollTrigger: {
+            trigger: '.dashboard-cta',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 40,
+        scale: 0.9,
+        duration: 1.2,
+        delay: 0.5,
+        ease: 'elastic.out(1, 0.5)'
+        });
+
+        
+        // Step 1: Analysis Section
+        animateStepSection('#step1');
+        
+        gsap.from('#step1 .parameter', {
+          scrollTrigger: {
+            trigger: '#step1 .analysis-parameters',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -30,
+          duration: 0.6,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step1 .analysis-illustration', {
+          scrollTrigger: {
+            trigger: '#step1 .analysis-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        
+        // Step 2: Filtration Section
+        animateStepSection('#step2');
+        
+        gsap.from('#step2 .stage', {
+          scrollTrigger: {
+            trigger: '#step2 .filtration-stages',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -40,
+          duration: 0.6,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step2 .filter-layer', {
+          scrollTrigger: {
+            trigger: '#step2 .filtration-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: 40,
+          duration: 0.6,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        // Step 3: Plant System Section
+        animateStepSection('#step3');
+        
+        gsap.from('#step3 .detail-item', {
+          scrollTrigger: {
+            trigger: '#step3 .process-details',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          x: -40,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step3 .plant-system', {
+          scrollTrigger: {
+            trigger: '#step3 .plant-system',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.85,
+          duration: 1,
+          ease: 'power3.out'
+        });
+        
+        // Step 4: Triple Output Section
+        animateStepSection('#step4');
+        
+        gsap.from('#step4 .metric', {
+          scrollTrigger: {
+            trigger: '#step4 .output-metrics',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step4 .application', {
+          scrollTrigger: {
+            trigger: '#step4 .application-list',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step4 .output-illustration > div', {
+          scrollTrigger: {
+            trigger: '#step4 .output-illustration',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          stagger: 0.25,
+          ease: 'power3.out'
+        });
+        
+        gsap.from('#step4 .graph-container', {
+          scrollTrigger: {
+            trigger: '#step4 .graph-container',
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      }
+
+      // Helper function to animate a step section
+      function animateStepSection(sectionId) {
+        gsap.from(`${sectionId} .step-indicator`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          scale: 0.5,
+          duration: 0.6,
+          ease: 'back.out(1.7)'
+        });
+        
+        gsap.from(`${sectionId} .section-title`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -30,
+          duration: 0.8,
+          delay: 0.2,
+          ease: 'power3.out'
+        });
+        
+        gsap.from(`${sectionId} .section-subtitle`, {
+          scrollTrigger: {
+            trigger: sectionId,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: -20,
+          duration: 0.8,
+          delay: 0.3,
+          ease: 'power3.out'
+        });
+        
+        gsap.from(`${sectionId} .text-content p`, {
+          scrollTrigger: {
+            trigger: `${sectionId} .text-content`,
+            start: 'top 80%'
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          delay: 0.4,
+          ease: 'power3.out'
+        });
+      }
+
+      // Create charts when DOM is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        createEfficiencyChart();
+        createPowerChart();
+      });
+
+      // Enhanced Efficiency Chart
+      function createEfficiencyChart() {
+        const ctx = document.getElementById('efficiencyChart');
+        if (!ctx) return;
+        
+        const chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Heavy Metals', 'Nitrogen', 'Phosphorus', 'Organic Compounds', 'Bacteria'],
+            datasets: [{
+              label: 'Removal Efficiency (%)',
+              data: [94, 98, 96, 91, 99],
+              backgroundColor: [
+                'rgba(39, 174, 96, 0.8)',
+                'rgba(41, 128, 185, 0.8)',
+                'rgba(155, 89, 182, 0.8)',
+                'rgba(230, 126, 34, 0.8)',
+                'rgba(52, 73, 94, 0.8)'
+              ],
+              borderColor: [
+                'rgba(39, 174, 96, 1)',
+                'rgba(41, 128, 185, 1)',
+                'rgba(155, 89, 182, 1)',
+                'rgba(230, 126, 34, 1)',
+                'rgba(52, 73, 94, 1)'
+              ],
+              borderWidth: 2,
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return `Removal: ${context.raw}%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                },
+                title: {
+                  display: true,
+                  text: 'Removal Efficiency (%)'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Contaminant Type'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Enhanced Power & Growth Chart
+      function createPowerChart() {
+        const ctx = document.getElementById('powerChart');
+        if (!ctx) return;
+        
+        // Generate time data (hours)
+        const hours = Array.from({length: 24}, (_, i) => i);
+        
+        // Generate synthetic power data with day/night cycle
+        const powerData = hours.map(hour => {
+          const isDaylight = hour >= 6 && hour <= 18;
+          const baseValue = isDaylight ? 70 : 50;
+          const variation = isDaylight ? 15 : 8;
+          
+          return baseValue + Math.random() * variation;
+        });
+        
+        // Generate synthetic growth data (cumulative)
+        const growthData = hours.map(hour => {
+          return 100 + (hour * 2.1) + Math.random() * 5;
+        });
+        
+        const chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: hours.map(hour => `${hour}:00`),
+            datasets: [{
+              label: 'Power Output (mW)',
+              data: powerData,
+              backgroundColor: 'rgba(52, 152, 219, 0.2)',
+              borderColor: 'rgba(52, 152, 219, 1)',
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+              pointRadius: 4,
+              yAxisID: 'y'
+            }, {
+              label: 'Plant Growth Rate (%)',
+              data: growthData,
+              backgroundColor: 'rgba(39, 174, 96, 0.2)',
+              borderColor: 'rgba(39, 174, 96, 1)',
+              borderWidth: 3,
+              fill: false,
+              tension: 0.4,
+              pointBackgroundColor: 'rgba(39, 174, 96, 1)',
+              pointRadius: 4,
+              yAxisID: 'y1'
+            }]
+          },
+          options: {
+            responsive: true,
+            interaction: {
+              mode: 'index',
+              intersect: false,
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    if (context.datasetIndex === 0) {
+                      return `Power: ${context.raw.toFixed(1)} mW`;
+                    } else {
+                      return `Growth: ${context.raw.toFixed(1)}%`;
+                    }
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Time (hours)'
+                }
+              },
+              y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                  display: true,
+                  text: 'Power (mW)'
+                },
+                beginAtZero: true
+              },
+              y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: {
+                  display: true,
+                  text: 'Growth Rate (%)'
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
