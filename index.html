@@ -9,6 +9,244 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
+      /* Improved Mobile Styles */
+      @media (max-width: 480px) {
+        body {
+          font-size: 15px;
+          padding: 0;
+        }
+
+        .container {
+          padding: 0 8px;
+        }
+
+        .header {
+          height: auto;
+          min-height: 80vh;
+          padding-bottom: 24px;
+        }
+
+        .header-content {
+          padding: 32px 0 16px 0;
+        }
+
+        .project-title {
+          font-size: 1.3rem;
+          margin-bottom: 8px;
+          word-break: break-word;
+        }
+
+        .project-subtitle {
+          font-size: 0.95rem;
+          margin-bottom: 20px;
+          padding: 0 2px;
+        }
+
+        .logo-img2,
+        .logo-img {
+          height: 32px !important;
+          max-width: 90vw;
+        }
+
+        .header-icons {
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 18px;
+        }
+
+        .icon-box {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+
+        .navbar .container {
+          flex-direction: column;
+          gap: 6px;
+          padding: 0 2px;
+        }
+
+        .logo {
+          font-size: 1.1rem;
+        }
+
+        .nav-links {
+          gap: 6px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .nav-link {
+          padding: 4px 8px;
+          font-size: 0.85rem;
+          margin-bottom: 2px;
+        }
+
+        .section {
+          padding: 32px 0 24px 0;
+          min-height: unset;
+        }
+
+        .section-header {
+          margin-bottom: 18px;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+          margin-bottom: 6px;
+        }
+
+        .section-subtitle,
+        .section-subtitle2 {
+          font-size: 0.95rem;
+          padding: 0 2px;
+        }
+
+        .section-content,
+        .section-content.reverse {
+          flex-direction: column !important;
+          gap: 16px;
+        }
+
+        .text-content,
+        .visual-content {
+          width: 100%;
+          min-width: 0;
+        }
+
+        .key-benefits,
+        .output-metrics,
+        .output-illustration {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .graph-container img {
+          display: block;
+          max-width: 100%;
+          height: auto;
+          margin: 0 auto;
+        }
+
+        .benefit,
+        .metric,
+        .water-output,
+        .electricity-output,
+        .plant-output {
+          padding: 10px;
+          font-size: 0.95rem;
+        }
+
+        .benefit i,
+        .application i {
+          font-size: 1.2rem;
+        }
+
+        .graph-container {
+          padding: 8px;
+          margin-bottom: 10px;
+        }
+
+        .graph-container h3 {
+          font-size: 1rem;
+          margin-bottom: 8px;
+        }
+
+        .filtration-illustration,
+        .plant-system {
+          min-height: 180px;
+          padding: 8px;
+        }
+
+        .pot-container {
+          width: 80px;
+          height: 220px;
+        }
+
+        .printed-pot {
+          width: 70px;
+          height: 100px;
+        }
+
+        .pot-layer {
+          font-size: 0.7rem;
+          padding: 0 4px;
+        }
+
+        .floating-plant {
+          height: 40px;
+          margin-bottom: -8px;
+        }
+
+        .plant-leaves {
+          width: 50px;
+          height: 28px;
+        }
+
+        .plant-stem {
+          width: 5px;
+          height: 20px;
+        }
+
+        .application-list {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        .application {
+          padding: 6px;
+          font-size: 0.95rem;
+        }
+
+        .output-illustration {
+          gap: 8px;
+          margin-top: 10px;
+        }
+
+        .water-drops,
+        .lightning,
+        .plant-growth {
+          width: 48px;
+          height: 48px;
+          margin-bottom: 4px;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+
+        .footer-info h3 {
+          font-size: 1.1rem;
+        }
+
+        .footer-links {
+          gap: 10px;
+        }
+
+        .footer-links a {
+          font-size: 1.1rem;
+        }
+
+        .footer-bottom {
+          font-size: 0.85rem;
+          padding-top: 8px;
+        }
+
+        /* Hide hover effects on mobile */
+        .dashboard-button:hover,
+        .benefit:hover,
+        .metric:hover,
+        .application:hover,
+        .stage:hover,
+        .detail-item:hover,
+        .water-output:hover,
+        .electricity-output:hover,
+        .plant-output:hover {
+          transform: none !important;
+          box-shadow: var(--shadow-sm) !important;
+        }
+      }
 /* Base Styles */
 :root {
   --primary-color: #1b4d3e;
