@@ -318,6 +318,17 @@ z {
   margin-bottom: var(--spacing-xs);
 }
 
+.credit-link {
+  color: #00c8ff;         /* couleur normale (bleu clair personnalisé) */
+  text-decoration: none;  /* optionnel : supprime le soulignement */
+  transition: color 0.3s; /* effet fluide */
+}
+
+.credit-link:hover {
+  color: #d8fa5e;         /* change au survol (ex : blanc) */
+}
+
+
 /* Analysis Parameters */
 .analysis-parameters {
   margin-top: var(--spacing-md);
@@ -420,6 +431,34 @@ z {
   padding: var(--spacing-sm);
   border-radius: 50%;
   box-shadow: var(--shadow-sm);
+}
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espace entre logo et texte */
+}
+
+.logo-img2 {
+  height: 80px; /* ou ajuste à ta convenance */
+  width: auto;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 1.5));
+}
+@media (max-width: 600px) {
+  .logo-img {
+    height: 28px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.logo-img {
+  height: 42px; /* ou 40px selon ton design */
+  margin-right: 8px;
 }
 
 /* Filtration Stages */
@@ -1207,7 +1246,10 @@ footer {
     <header class="header" id="header">
       <div class="container">
         <div class="header-content">
-          <h1 class="project-title">LumiClear<span class="highlight"></span></h1>
+          <h1 class="project-title">
+            <span class="logo-title"></span>
+            <img src="logo lumiclear.png" alt="LumiClear Logo" class="logo-img2" >
+            LumiClear<span class="highlight"></span></h1>
           <h2 class="project-subtitle">Wastewater Purification, Electricity Generation & Plant Growth</h2>
           <div class="header-icons">
             <div class="icon-box">
@@ -1239,11 +1281,14 @@ footer {
 
     <nav class="navbar" id="navbar">
       <div class="container">
-        <div class="logo">LumiClear<span class="highlight"></span></div>
+        <div class="logo">
+          <img src="logo lumiclear.png" alt="LumiClear Logo" class="logo-img">
+          LumiClear<span class="highlight"></span>
+        </div>
         <div class="nav-links">
           <a href="#introduction" class="nav-link">Introduction</a>
-          <a href="#step1" class="nav-link">Analysis</a>
-          <a href="#step2" class="nav-link">Filtration</a>
+          <a href="#step1" class="nav-link">Filtration</a>
+          <a href="#step2" class="nav-link">Analysis</a>
           <a href="#step3" class="nav-link">Plant System</a>
           <a href="#step4" class="nav-link">Triple Output</a>
           <a href="dashboard_nbta2.html" class="nav-link">Dashboard</a>
@@ -1281,18 +1326,70 @@ footer {
             </div>
             <div class="visual-content">
               <div class="graph-container">
-                <h3>System Efficiency Comparison</h3>
-                <canvas id="efficiencyChart"></canvas>
+                <h3>Our System</h3>
+                <img src="tswira d nbta.jpg" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      
+
       <section id="step1" class="section">
         <div class="container">
           <div class="section-header">
             <div class="step-indicator">Step 1</div>
+            <h2 class="section-title">One of the Methods of Water Purification: Multi-Stage Preliminary Filtration</h2>
+            <p class="section-subtitle">Consisting of multiple stages to prepare water for biological treatment</p>
+          </div>
+          <div class="section-content">
+            <div class="text-content">
+              <p>Before entering biological treatment, water undergoes multi-stage preliminary filtration to remove suspended solids, debris, and certain chemical pollutants. This process ensures better efficiency and performance of the overall purification system. The main stages include:</p>
+              <div class="filtration-stages">
+                <div class="stage">
+                  <div class="stage-number">01</div>
+                  <h4>Coarse Filtration</h4>
+                  <p>Sand and gravel filters remove larger debris and suspended particles</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">02</div>
+                  <h4>Fine Mesh Filtration</h4>
+                  <p>Advanced textile screens capture microscopic suspended solids</p>
+                </div>
+                <div class="stage">
+                  <div class="stage-number">03</div>
+                  <h4>Carbon Adsorption</h4>
+                  <p>Activated carbon removes chemicals, odors, and dissolved organics</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="filtration-illustration">
+                <div class="filter-layer sand-filter">
+                  <div class="label">Sand Filter</div>
+                </div>
+                <div class="filter-layer textile-filter">
+                  <div class="label">Textile Filter</div>
+                </div>
+                <div class="filter-layer carbon-filter">
+                  <div class="label">Carbon Filter</div>
+                </div>
+                <div class="water-flow">
+                  <div class="drop drop1"></div>
+                  <div class="drop drop2"></div>
+                  <div class="drop drop3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="step2" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="step-indicator">Step 2</div>
             <h2 class="section-title">Advanced Wastewater Analysis</h2>
             <p class="section-subtitle">Comprehensive characterization for optimal treatment</p>
           </div>
@@ -1351,56 +1448,6 @@ footer {
         </div>
       </section>
 
-      <section id="step2" class="section">
-        <div class="container">
-          <div class="section-header">
-            <div class="step-indicator">Step 2</div>
-            <h2 class="section-title">Multi-Stage Preliminary Filtration</h2>
-            <p class="section-subtitle">Preparing wastewater for biological processing</p>
-          </div>
-          <div class="section-content">
-            <div class="text-content">
-              <p>Before biological treatment, wastewater undergoes sophisticated preliminary filtration to remove larger particles, debris, and select chemical contaminants. This preparation optimizes conditions for the plant-based purification system and enhances overall system performance.</p>
-              <div class="filtration-stages">
-                <div class="stage">
-                  <div class="stage-number">01</div>
-                  <h4>Coarse Filtration</h4>
-                  <p>Sand and gravel filters remove larger debris and suspended particles</p>
-                </div>
-                <div class="stage">
-                  <div class="stage-number">02</div>
-                  <h4>Fine Mesh Filtration</h4>
-                  <p>Advanced textile screens capture microscopic suspended solids</p>
-                </div>
-                <div class="stage">
-                  <div class="stage-number">03</div>
-                  <h4>Carbon Adsorption</h4>
-                  <p>Activated carbon removes chemicals, odors, and dissolved organics</p>
-                </div>
-              </div>
-            </div>
-            <div class="visual-content">
-              <div class="filtration-illustration">
-                <div class="filter-layer sand-filter">
-                  <div class="label">Sand Filter</div>
-                </div>
-                <div class="filter-layer textile-filter">
-                  <div class="label">Textile Filter</div>
-                </div>
-                <div class="filter-layer carbon-filter">
-                  <div class="label">Carbon Filter</div>
-                </div>
-                <div class="water-flow">
-                  <div class="drop drop1"></div>
-                  <div class="drop drop2"></div>
-                  <div class="drop drop3"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="step3" class="section">
         <div class="container">
           <div class="section-header">
@@ -1410,7 +1457,7 @@ footer {
           </div>
           <div class="section-content reverse">
             <div class="text-content">
-              <p>Our innovative system features <em>Canna indica</em> plants floating in a specially designed 3D-printed pot with optimized layer architecture. This groundbreaking setup combines phytoremediation with Plant Microbial Fuel Cell (PMFC) technology while promoting accelerated plant growth through controlled nutrient uptake.</p>
+              <p>Our innovative system features <em>Pistia stratiotes (Laitue d'eau)</em> plants floating in a specially designed 3D-printed pot with optimized layer architecture. This groundbreaking setup combines phytoremediation with Plant Microbial Fuel Cell (PMFC) technology while promoting accelerated plant growth through controlled nutrient uptake.</p>
               <div class="process-details">
                 <div class="detail-item">
                   <h4><i class="fas fa-layer-group"></i> Multi-Layer Architecture</h4>
@@ -1418,7 +1465,7 @@ footer {
                 </div>
                 <div class="detail-item">
                   <h4><i class="fas fa-filter"></i> Enhanced Phytoremediation</h4>
-                  <p>The floating <em>Canna indica</em> plant efficiently filters pollutants through its extensive root system while accessing optimal nutrients for accelerated growth.</p>
+                  <p>The floating <em>Pistia stratiotes (Laitue d'eau)</em> plant efficiently filters pollutants through its extensive root system while accessing optimal nutrients for accelerated growth.</p>
                 </div>
                 <div class="detail-item">
                   <h4><i class="fas fa-bolt"></i> Optimized Electricity Generation</h4>
@@ -1439,7 +1486,7 @@ footer {
                   </div>
                   <div class="printed-pot">
                     <div class="pot-layer surface-layer">
-                      <div class="cathode-surface">Cathode (Air Exposed)</div>
+                      <div class="cathode-surface">Cathode (Air Exposed)"PLatine"</div>
                     </div>
                     <div class="pot-layer wastewater-layer">
                       <div class="wastewater-waves"></div>
@@ -1449,7 +1496,7 @@ footer {
                       <span style="color: white;">Second Soil Layer</span>
                     </div>
                     <div class="pot-layer graphite-layer">
-                      <div class="anode-buried">Anode (Graphite)</div>
+                      <div class="anode-buried">Anode </div>
                       <div class="microbes">
                         <i class="fas fa-bacterium"></i>
                         <i class="fas fa-bacterium"></i>
@@ -1572,7 +1619,7 @@ footer {
         </div>
         <div class="footer-bottom">
           <p>&copy; 2025 LumiClear. All rights reserved.</p>
-          <a href="https://zakariae-belarbi.github.io/mon-portfolio/"><p>Made by Zakariae-Belarbi</p></a>
+          <a href="https://zakariae-belarbi.github.io/mon-portfolio/" class=" credit-link">Made by Zakariae-Belarbi</a>
         </div>
       </div>
     </footer>
