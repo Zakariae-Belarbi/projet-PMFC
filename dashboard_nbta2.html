@@ -219,21 +219,23 @@
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
+        display: flex;
+        align-items: center;
+        gap: 10px;          /* Espace entre le logo et le texte */
+}
+
+    .logo-img {
+        height: 60px;       /* ← ici tu contrôles la taille du logo */
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(1px 1px 1px white);
+}
 
     .logo i {
-      font-size: 2.5rem;
-      background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-right: var(--spacing-sm);
-      filter: drop-shadow(0 0 10px rgba(56, 193, 90, 0.5));
-      animation: pulse 2s ease-in-out infinite;
-    }
+      height: 80px; /* ou ajuste à ta convenance */
+    width: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 1.5));
+      }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
@@ -985,7 +987,7 @@
   <div class="dashboard-container">
     <header class="dashboard-header">
       <div class="logo">
-        <i class="fas fa-leaf"></i>
+        <img src="logo lumiclear.png" class="logo-img" alt="LumiClear Logo">
         <h1>LumiClear</h1>
       </div>
       <div class="header-controls">
@@ -1128,7 +1130,7 @@
         <p>© 2025 LumiClear - Sustainable Energy Solutions</p>
       </div>
       <div class="footer-links">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="nbta_finale2.html"><i class="fas fa-home"></i> Home</a>
         <a href="#"><i class="fas fa-question-circle"></i> Help</a>
         <a href="#"><i class="fas fa-cog"></i> Settings</a>
         <a href="#"><i class="fas fa-user-shield"></i> Privacy</a>
@@ -1143,6 +1145,32 @@
       voltage: [0.18, 0.19, 0.18, 0.17, 0.20, 0.19, 0.18, 0.185, 0.195, 0.19, 0.18, 0.187, 0.182, 0.193, 0.188],
       lux: [503.42, 514.17, 524.93, 263.93, 2.93, 2.93, 2.93, 2.93, 2.93, 7.82, 12.71, 150.54, 288.37, 406.16, 523.95]
     };
+    const dailyData = [
+  {
+    labels: ['0.0h','1.5h','3.0h','4.5h','6.0h','7.5h','9.0h','10.5h','12.0h','13.5h','15.0h','16.5h','18.0h','19.5h','21.0h'], // mêmes labels
+    temperature: [18.26, 18.09, 18.52, 19.25, 18.76, 19.13, 19.34, 19.2, 19.55, 19.28, 19.06, 18.96, 18.6, 18.6, 18.65],
+    voltage: [0.23, 0.24, 0.23, 0.22, 0.25, 0.24, 0.23, 0.235, 0.245, 0.24, 0.23, 0.237, 0.232, 0.243, 0.238],
+    lux: [495.45, 508.71, 524.1, 280.49, 1.95, 0.71, 9.92, -4.72, 6.8, 2.14, 22.47, 162.9, 286.68, 412.54, 515.76]
+  },
+  {
+    labels: ['0.0h','1.5h','3.0h','4.5h','6.0h','7.5h','9.0h','10.5h','12.0h','13.5h','15.0h','16.5h','18.0h','19.5h','21.0h'],
+    temperature: [18.2, 18.42, 18.64, 18.98, 18.79, 19.15, 19.59, 18.9, 19.66, 19.49, 19.03, 18.89, 18.96, 18.47, 18.24],
+    voltage: [0.28, 0.29, 0.28, 0.27, 0.3, 0.29, 0.28, 0.285, 0.295, 0.29, 0.28, 0.287, 0.282, 0.293, 0.288],
+    lux: [519.39, 503.94, 510.78, 263.59, -3.37, 22.1, 20.15, 16.95, -9.36, 9.91, 13.41, 164.68, 271.84, 386.22, 515.39]
+  },
+  {
+    labels: ['0.0h','1.5h','3.0h','4.5h','6.0h','7.5h','9.0h','10.5h','12.0h','13.5h','15.0h','16.5h','18.0h','19.5h','21.0h'],
+    temperature: [18.35, 18.29, 18.52, 19.34, 18.95, 19.2, 19.28, 19.17, 19.64, 19.3, 19.11, 18.93, 18.62, 18.5, 18.59],
+    voltage: [0.33, 0.34, 0.33, 0.32, 0.35, 0.34, 0.33, 0.335, 0.345, 0.34, 0.33, 0.337, 0.332, 0.343, 0.338],
+    lux: [499.15, 513.19, 501.23, 274.25, 6.79, -2.83, 19.7, 5.1, 3.06, 11.61, 22.62, 150.9, 286.01, 392.71, 525.38]
+  },
+  {
+    labels: ['0.0h','1.5h','3.0h','4.5h','6.0h','7.5h','9.0h','10.5h','12.0h','13.5h','15.0h','16.5h','18.0h','19.5h','21.0h'],
+    temperature: [18.05, 18.37, 18.95, 19.22, 18.71, 19.46, 19.63, 19.31, 19.64, 19.23, 19.06, 18.87, 18.85, 18.79, 18.35],
+    voltage: [0.38, 0.39, 0.38, 0.37, 0.4, 0.39, 0.38, 0.385, 0.395, 0.39, 0.38, 0.387, 0.382, 0.393, 0.388],
+    lux: [509.16, 502.32, 525.47, 288.17, -1.05, -0.51, 2.38, 14.12, 11.76, -3.77, 23.68, 161.75, 275.77, 399.9, 523.73]
+  }
+];
 
     // Sample data for the dashboard
     const dashboardData = {
@@ -1220,12 +1248,12 @@
       },
       
       waterChartData: {
-        labels: ['Before treatement', 'Day 1', 'Day 3', 'Day 6', 'Day 9'],
+        labels: ['Before treatement', 'In process   ', 'After treatement'],
         datasets: [
           
           {
             label: 'After Treatement',
-            data: [1455, 1422, 1150, 695, 202],
+            data: [1155, 765, 423],
             borderColor: 'rgba(33, 150, 243, 1)',
             backgroundColor: 'rgba(33, 150, 243, 0.2)',
             tension: 0.4,
@@ -2011,7 +2039,41 @@
       initializeTable();
       startRealTimeUpdates();
 
-      
+      document.querySelectorAll('.btn-page').forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn-page').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const chart = window.charts.energyChart;
+    const tableBody = document.querySelector('#measurements-table tbody');
+
+    // Obtenir les données selon le bouton (index 0 = jour 1)
+    const data = index === 0 ? defaultExcelData : dailyData[index - 1];
+
+    // ⚡️ MAJ du graphe
+    chart.data.labels = data.labels;
+    chart.data.datasets[0].data = data.voltage;
+    chart.update();
+
+    // 🧪 MAJ du tableau de mesures
+    tableBody.innerHTML = '';
+    for (let i = 0; i < data.labels.length; i++) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${data.labels[i]}</td>
+        <td>${data.voltage[i].toFixed(3)}</td>
+        <td>--</td>
+        <td>${data.lux[i].toFixed(2)}</td>
+        <td>${data.temperature[i].toFixed(2)}</td>
+        <td><div class="status-cell">Simulated</div></td>
+      `;
+      tableBody.appendChild(row);
+    }
+
+    updateEntriesCount(); // met à jour "Showing X of Y"
+  });
+});
+
       // Add global keyboard shortcuts
       document.addEventListener('keydown', (e) => {
         // Toggle theme with Ctrl/Cmd + T
@@ -2021,7 +2083,7 @@
         }
       });
 
-      console.log('🌱 LumiClear Dashboard initialized successfully!');
+      console.log('🌱 LuiClear Dashboard initialized successfully!');
       parseExcelData([
         ["Time", "Temp", "Volt", "Lux"],
         ...defaultExcelData.labels.map((label, i) => [
@@ -2031,7 +2093,6 @@
           defaultExcelData.lux[i]
         ])
       ]);
-
     });
   </script>
 </body>
