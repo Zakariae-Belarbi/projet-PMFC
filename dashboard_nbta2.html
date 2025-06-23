@@ -1223,10 +1223,7 @@
               <i class="fas fa-search"></i>
               <input type="text" placeholder="Search measurements..." id="table-search">
             </div>
-            <button class="btn-secondary">
-              <i class="fas fa-filter"></i>
-              Filter
-            </button>
+            
           </div>
         </div>
         
@@ -2020,7 +2017,7 @@
         });
         
         updateEntriesCount();
-      }, 300));
+      }, 30));
     }
 
     // Debounce function for search
@@ -2038,10 +2035,11 @@
 
     function updateEntriesCount() {
       const visibleRows = document.querySelectorAll('#measurements-table tbody tr:not([style*="display: none"])');
-      const totalRows = document.querySelectorAll('#measurements-table tbody tr');
-      
-      document.getElementById('showing-entries').textContent = visibleRows.length;
-      document.getElementById('total-entries').textContent = totalRows.length;
+      const totalDays = 5; // 🔁 fixe selon ton dataset
+      const showingDays = visibleRows.length > 0 ? 1 : 0; // 1 seul jour affiché à la fois
+
+      document.getElementById('showing-entries').textContent = showingDays;
+      document.getElementById('total-entries').textContent = totalDays;
     }
 
     // Theme functionality
@@ -2203,7 +2201,7 @@
         <td>--</td>
         <td>${data.lux[i].toFixed(2)}</td>
         <td>${data.temperature[i].toFixed(2)}</td>
-        <td><div class="status-cell">imported</div></td>
+        <td><div class="status-cell">Imported</div></td>
       `;
       tableBody.appendChild(row);
     }
