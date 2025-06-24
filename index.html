@@ -232,7 +232,11 @@
           font-size: 0.85rem;
           padding-top: 8px;
         }
-
+        .grid-item a {
+          margin-top: 0.5rem;
+          display: inline-block;
+        }
+w
         /* Hide hover effects on mobile */
         .dashboard-button:hover,
         .benefit:hover,
@@ -246,7 +250,26 @@
           transform: none !important;
           box-shadow: var(--shadow-sm) !important;
         }
+        .process-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* centre horizontalement chaque .detail-item */
+            gap: 1rem;
+          }
+
+          .detail-item {
+            text-align: center;
+            max-width: 100%; /* ou 90% si tu veux des marges */
+          }
+
+          .detail-item h4,
+          .detail-item {
+            transform: none !important;
+            transition: none !important;
+          }
       }
+      
+
 /* Base Styles */
 :root {
   --primary-color: #1b4d3e;
@@ -393,12 +416,12 @@ z {
 
 .icon-box i {
   font-size: 2rem;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0.1rem;
 }
 
 .scroll-down {
-  position: absolute;
-  bottom: var(--spacing-lg);
+  position: relative;
+  margin-top: 0.1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -409,6 +432,7 @@ z {
 .scroll-down i {
   font-size: 1.5rem;
   margin-top: var(--spacing-xs);
+  margin-top: 0.5rem;
 }
 
 @keyframes bounce {
